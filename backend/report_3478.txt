@@ -1,0 +1,7 @@
+PASS: Project appears unique (54.0% Originality).
+Custom file structure detected.
+
+--- MATCHED REPOSITORIES ---
+- RishiMane03/ai-hub-mern-project (https://github.com/RishiMane03/ai-hub-mern-project): 39.0% Match
+- Ajju0211/AI-HubX (https://github.com/Ajju0211/AI-HubX): 46.0% Match
+- SoumayaRomdhani/mern_blog-app (https://github.com/SoumayaRomdhani/mern_blog-app): 24.0% Match

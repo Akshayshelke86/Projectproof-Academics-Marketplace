@@ -1,0 +1,7 @@
+PASS: Project appears unique (60.0% Originality).
+Custom file structure detected.
+
+--- MATCHED REPOSITORIES ---
+- MultiEmail/backend (https://github.com/MultiEmail/backend): 20.0% Match
+- MultiEmail/frontend (https://github.com/MultiEmail/frontend): 22.0% Match
+- si3mshady/Slack-Clone---MERN-Stack (https://github.com/si3mshady/Slack-Clone---MERN-Stack): 40.0% Match

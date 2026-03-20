@@ -1,0 +1,20 @@
+Terminal 1: Backend (Server) सुरू करण्यासाठी
+VS Code मध्ये नवीन टर्मिनल उघडा.
+खालील कमांड्स एक-एक करून रन करा:
+bash
+cd backend
+(फक्त एकदा करा - Python Setup साठी):
+bash
+pip install -r plagiarism-engine/requirements.txt
+(नेहमी सर्व्हर सुरू करण्यासाठी):
+bash
+npm start
+✅ Output: "Server running on PORT 5001" आणि "MongoDB Connected" दिसेल.
+Terminal 2: Frontend (Website) सुरू करण्यासाठी
+Add (+) बटनावर क्लिक करून दुसरे टर्मिनल उघडा.
+खालील कमांड्स रन करा:
+bash
+cd client
+bash
+npm run dev
+✅ Output: "Local: http://localhost:5173/" दिसेल.

@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light Mode (Premium) */
+  --bg-deep: #f1f5f9;
+  /* Slate 100 - Cool light gray */
+  --bg-surface: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.7);
+  /* More transparent for glass feel */
+  --primary-glow: #0284c7;
+  /* Sky 600 - Stronger blue for visibility */
+  --secondary-glow: #10b981;
+  --accent-glow: #6366f1;
+  --text-main: #0f172a;
+  /* Slate 900 - Sharp text */
+  --text-dim: #64748b;
+  --border-color: #cbd5e1;
+  /* Slate 300 - Crisp borders */
+}
+
+.dark {
+  /* Dark Mode (Midnight Premium) */
+  --bg-deep: #05070a;
+  --bg-surface: #0f172a;
+  --bg-card: rgba(15, 23, 42, 0.6);
+  --primary-glow: #38bdf8;
+  --secondary-glow: #10b981;
+  --accent-glow: #6366f1;
+  --text-main: #f8fafc;
+  --text-dim: #94a3b8;
+  --border-color: rgba(255, 255, 255, 0.1);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar for Devs */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-dim);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-glow);
+}
+
+.glow-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glow-card:hover {
+  border-color: var(--primary-glow);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
+  transform: translateY(-4px);
+}
+
+.glass-nav {
+  background: rgba(5, 7, 10, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-tech-primary {
+  background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.btn-tech-primary:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 25px rgba(99, 102, 241, 0.5);
+  transform: scale(1.02);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #38bdf8, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* GLOBAL DARK MODE OVERRIDES */
+.dark .bg-white {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-gray-200 {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600 {
+  color: var(--text-main) !important;
+}
+
+.dark .text-gray-500,
+.dark .text-gray-400 {
+  color: var(--text-dim) !important;
+}
+
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300 {
+  border-color: var(--border-color) !important;
+}
+
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-lg,
+.dark .shadow-xl {
+  box-shadow: none !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* Comprehensive Text Color Overrides for Dark Mode */
+.dark .text-black,
+.dark .text-slate-900,
+.dark .text-slate-800,
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-zinc-900,
+.dark .text-zinc-800,
+.dark .text-neutral-900,
+.dark .text-neutral-800,
+.dark .text-stone-900,
+.dark .text-stone-800 {
+  color: var(--text-main) !important;
+}
+
+/* Light Background Overrides for Dark Mode */
+.dark .bg-blue-50,
+.dark .bg-blue-100,
+.dark .bg-indigo-50,
+.dark .bg-indigo-100,
+.dark .bg-sky-50,
+.dark .bg-sky-100,
+.dark .bg-yellow-50,
+.dark .bg-yellow-100 {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Form Elements Dark Mode Fix */
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  border-color: var(--border-color);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--text-dim);
+}

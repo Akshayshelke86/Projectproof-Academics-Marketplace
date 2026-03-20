@@ -1,0 +1,7 @@
+ALERT: High similarity (51.0%) detected with public repositories.
+File structure matches common patterns in found repos.
+
+--- MATCHED REPOSITORIES ---
+- RishiMane03/ai-hub-mern-project (https://github.com/RishiMane03/ai-hub-mern-project): 51.0% Match
+- Ajju0211/AI-HubX (https://github.com/Ajju0211/AI-HubX): 33.0% Match
+- SoumayaRomdhani/mern_blog-app (https://github.com/SoumayaRomdhani/mern_blog-app): 8.0% Match

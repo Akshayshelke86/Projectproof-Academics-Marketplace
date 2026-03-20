@@ -1,0 +1,27 @@
+RAZORPAY TEST MODE CARDS
+========================
+
+Use these details to test payments without real money.
+
+1. VISA / MASTERCARD (Success Flow)
+-----------------------------------
+Card Number:  4111 1111 1111 1111
+Expiry Date:  12 / 30  (Any future date)
+CVV:          123      (Any 3 digits)
+OTP:          123456   (Or click 'Success' on the popup)
+
+2. VISA (Failure Flow)
+---------------------------
+Card Number:  4000 0000 0000 0000
+Expiry:       12 / 30
+CVV:          123
+
+3. NETBANKING
+-------------
+Select Bank:  HDFC Bank (Test)
+User ID:      1234
+Password:     1234
+
+4. UPI (Test)
+-------------
+VPA:          success@razorpay
