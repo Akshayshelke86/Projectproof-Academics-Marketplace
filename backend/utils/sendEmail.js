@@ -7,7 +7,7 @@ const sendEmail = async ({ to, subject, html }) => {
             const transporter = nodemailer.createTransport({
                 host: process.env.SMTP_HOST,
                 port: process.env.SMTP_PORT, // 587 or 465
-                secure: false, // true for 465, false for other ports
+                secure: process.env.SMTP_PORT == 465, // true for 465, false for other ports
                 auth: {
                     user: process.env.SMTP_USER,
                     pass: process.env.SMTP_PASS,
@@ -15,7 +15,7 @@ const sendEmail = async ({ to, subject, html }) => {
             });
 
             const info = await transporter.sendMail({
-                from: `"ProjectProof Marketplace" <${process.env.SMTP_USER}>`,
+                from: `"ProjectProof Marketplace" <${process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER}>`,
                 to: to,
                 subject: subject,
                 html: html,

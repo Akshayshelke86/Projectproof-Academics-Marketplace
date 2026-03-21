@@ -1,7 +1,9 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
+import Otp from "../models/otpModel.js";
 import jwt from "jsonwebtoken";
 import { OAuth2Client } from "google-auth-library";
+import sendEmail from "../utils/sendEmail.js";
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -175,11 +177,55 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Generate OTP for registration
+// @route POST /api/users/send-otp
+// @access Public
+const sendOTP = asyncHandler(async (req, res) => {
+  const { email, name } = req.body;
+
+  const userExists = await User.findOne({ email });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  // Generate 6 digit OTP
+  const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+  // Save/Update OTP in DB
+  await Otp.findOneAndDelete({ email }); // Delete old OTP if exists
+  await Otp.create({ email, otp: otpCode });
+
+  // Send Email
+  const html = `
+    <h2>Verify your Email</h2>
+    <p>Hi ${name || 'User'},</p>
+    <p>Your One Time Password (OTP) for ProjectProof registration is: <b>${otpCode}</b></p>
+    <p>This code will expire in 10 minutes.</p>
+  `;
+  await sendEmail({ to: email, subject: "ProjectProof - Registration OTP", html });
+
+  res.json({ message: "OTP sent successfully" });
+});
+
 // @desc Register a new user
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, role, referralCode } = req.body;
+  const { name, email, password, role, referralCode, otp } = req.body;
+
+  if (!otp) {
+    res.status(400);
+    throw new Error("OTP is required to register");
+  }
+
+  // Verify OTP
+  const validOtpRecord = await Otp.findOne({ email, otp });
+  if (!validOtpRecord) {
+    res.status(400);
+    throw new Error("Invalid or Expired OTP");
+  }
 
   const userExists = await User.findOne({ email });
 
@@ -216,6 +262,9 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
+    // Clean up OTP
+    await Otp.findOneAndDelete({ email });
+
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -319,6 +368,7 @@ export {
   getUserProfile,
   getUsers,
   registerUser,
+  sendOTP,
   updateUserProfile,
   getUserById,
   updateUser,
