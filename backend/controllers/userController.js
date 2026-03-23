@@ -197,14 +197,29 @@ const sendOTP = asyncHandler(async (req, res) => {
   await Otp.findOneAndDelete({ email }); // Delete old OTP if exists
   await Otp.create({ email, otp: otpCode });
 
-  // Send Email
+  // Send Email with Professional Styling
   const html = `
-    <h2>Verify your Email</h2>
-    <p>Hi ${name || 'User'},</p>
-    <p>Your One Time Password (OTP) for ProjectProof registration is: <b>${otpCode}</b></p>
-    <p>This code will expire in 10 minutes.</p>
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 12px; padding: 30px; background-color: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+        <div style="text-align: center; border-bottom: 2px solid #f3f4f6; padding-bottom: 20px; margin-bottom: 20px;">
+            <h2 style="color: #2563eb; margin: 0; font-size: 24px; font-weight: 800;">ProjectProof</h2>
+            <p style="color: #6b7280; font-size: 14px; margin-top: 5px;">Secure Account Verification</p>
+        </div>
+        <p style="font-size: 16px; color: #1f2937; margin-bottom: 15px;">Hello <b>${name || 'User'}</b>,</p>
+        <p style="font-size: 15px; color: #4b5563; line-height: 1.6;">Thank you for joining ProjectProof Marketplace. To complete your secure registration, please use the following 6-digit One-Time Password (OTP):</p>
+        
+        <div style="text-align: center; margin: 35px 0;">
+            <span style="font-size: 36px; font-weight: 900; letter-spacing: 8px; color: #111827; background-color: #f8fafc; padding: 15px 40px; border-radius: 10px; border: 2px dashed #cbd5e1; display: inline-block;">${otpCode}</span>
+        </div>
+        
+        <p style="font-size: 14px; color: #ef4444; text-align: center; margin-bottom: 30px;"><b>Notice:</b> This code will expire in 10 minutes. Do not share it with anyone.</p>
+        
+        <div style="border-top: 1px solid #f3f4f6; padding-top: 20px; text-align: center;">
+            <p style="font-size: 12px; color: #9ca3af; margin: 0;">This is an automated message, please do not reply.</p>
+            <p style="font-size: 12px; color: #9ca3af; margin-top: 5px;">&copy; ${new Date().getFullYear()} ProjectProof Marketplace. All rights reserved.</p>
+        </div>
+    </div>
   `;
-  await sendEmail({ to: email, subject: "ProjectProof - Registration OTP", html });
+  await sendEmail({ to: email, subject: "Your ProjectProof Verification Code", html });
 
   res.json({ message: "OTP sent successfully" });
 });

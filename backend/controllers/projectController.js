@@ -1,5 +1,8 @@
 import asyncHandler from 'express-async-handler'
 import Project from '../models/projectModel.js'
+import Order from '../models/orderModel.js'
+import AdmZip from 'adm-zip'
+import axios from 'axios'
 
 //@desc fetch all the products
 //@route GET /api/products
@@ -92,7 +95,7 @@ const deleteProject = asyncHandler(async (req, res) => {
 // @route POST /api/products/
 // @access Private/Admin
 const createProject = asyncHandler(async (req, res) => {
-  const { title, price, description, image, category, techStack, features, githubRepoLink, videoLink, screenshots, zipFilePath } = req.body;
+  const { title, price, description, image, category, techStack, features, githubRepoLink, videoLink, demoLink, screenshots, zipFilePath } = req.body;
 
   const project = new Project({
     title: title || "Sample Project",
@@ -105,6 +108,7 @@ const createProject = asyncHandler(async (req, res) => {
     description: description || "Sample description",
     githubRepoLink: githubRepoLink || "",
     videoLink: videoLink || "",
+    demoLink: demoLink || "",
     screenshots: screenshots || [],
     zipFilePath: zipFilePath || "",
     status: 'draft'
@@ -117,7 +121,7 @@ const createProject = asyncHandler(async (req, res) => {
 // @route PUT /api/products/
 // @access Private/Admin
 const updateProject = asyncHandler(async (req, res) => {
-  const { title, price, description, image, category, techStack, features, githubRepoLink, videoLink, screenshots, zipFilePath, status } =
+  const { title, price, description, image, category, techStack, features, githubRepoLink, videoLink, demoLink, screenshots, zipFilePath, status } =
     req.body;
   const project = await Project.findById(req.params.id);
   if (project) {
@@ -145,6 +149,7 @@ const updateProject = asyncHandler(async (req, res) => {
     project.features = req.body.features || project.features;
     project.githubRepoLink = req.body.githubRepoLink || project.githubRepoLink;
     project.videoLink = req.body.videoLink || project.videoLink;
+    project.demoLink = req.body.demoLink !== undefined ? req.body.demoLink : project.demoLink;
     project.screenshots = req.body.screenshots || project.screenshots;
     project.zipFilePath = req.body.zipFilePath || project.zipFilePath;
 
@@ -225,6 +230,86 @@ const reportProject = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Download project with Watermark
+// @route GET /api/projects/:id/download
+// @access Private
+const downloadProject = asyncHandler(async (req, res) => {
+  const project = await Project.findById(req.params.id);
+
+  if (!project || !project.zipFilePath) {
+    res.status(404);
+    throw new Error('Project ZIP not found');
+  }
+
+  // Verify Ownership or Purchase
+  let hasAccess = false;
+  if (project.user.toString() === req.user._id.toString() || req.user.isAdmin || req.user.role === 'admin') {
+    hasAccess = true;
+  } else {
+    // Check if user bought it limit to paid orders
+    const order = await Order.findOne({ user: req.user._id, isPaid: true, 'orderItems.project': project._id });
+    if (order) hasAccess = true;
+  }
+
+  if (!hasAccess) {
+    res.status(401);
+    throw new Error('Not authorized to download this project. Please purchase it first.');
+  }
+
+  try {
+    // 1. Fetch ZIP from Cloudinary as Buffer
+    const response = await axios({
+      method: 'GET',
+      url: project.zipFilePath,
+      responseType: 'arraybuffer'
+    });
+
+    // 2. Open ZIP in Memory
+    const zip = new AdmZip(response.data);
+
+    // 3. Create Custom License / Watermark
+    const licenseText = `
+==================================================
+        PROJECTPROOF MARKETPLACE LICENSE
+==================================================
+
+Project: ${project.title}
+Author: ${project.user.toString() === req.user._id.toString() ? (req.user.name + " (Owner)") : "ProjectProof Seller"}
+
+LICENSED TO:
+Name: ${req.user.name}
+Email: ${req.user.email}
+User ID: ${req.user._id}
+Date of Download: ${new Date().toISOString()}
+
+WARNING: This software is exclusively licensed for 
+your personal, educational, or business use as per 
+ProjectProof Terms & Conditions. Reselling or freely 
+distributing these source files is strictly prohibited
+and monitored by advanced Anti-Piracy AI tracing.
+
+==================================================
+`;
+
+    // Add License to root of ZIP
+    zip.addFile('LICENSE_PROJECTPROOF.txt', Buffer.from(licenseText, 'utf8'));
+
+    // 4. Send modified ZIP back to user
+    const newZipBuffer = zip.toBuffer();
+
+    res.set('Content-Type', 'application/zip');
+    res.set('Content-Disposition', `attachment; filename="${project.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_licensed.zip"`);
+    res.set('Content-Length', newZipBuffer.length);
+
+    res.send(newZipBuffer);
+
+  } catch (error) {
+    console.error('Download Error:', error);
+    res.status(500);
+    throw new Error('Failed to process secure download');
+  }
+});
+
 export {
   getProjectById,
   getProjects,
@@ -233,5 +318,6 @@ export {
   createProjectReview,
   updateProject,
   deleteProject,
-  reportProject
+  reportProject,
+  downloadProject
 };

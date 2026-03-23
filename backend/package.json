@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "adm-zip": "^0.5.16",
+    "axios": "^1.13.6",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.9.0",
     "colors": "^1.4.0",

@@ -83,6 +83,7 @@ const projectSchema = mongoose.Schema(
 
     // Media & Validation
     videoLink: { type: String }, // Mandatory screen recording
+    demoLink: { type: String, default: "" }, // Optional Live Demo Link
     screenshots: [{ type: String }], // Mandatory screenshots
     healthCheckReport: { type: Object }, // Automated health scan result
 

@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { store } from "./services/store";
 import { Provider } from "react-redux"
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { HelmetProvider } from 'react-helmet-async';
 import axios from "axios"
 import ScrollUp from "./components/scrollBtn/ScrollUp";
 
@@ -14,13 +15,15 @@ axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || "/"; // Use env va
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <GoogleOAuthProvider clientId="483606787522-3i5g6kmdjhi23aqs240k809lhd0r9tva.apps.googleusercontent.com">
-        <ScrollUp />
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </GoogleOAuthProvider>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <GoogleOAuthProvider clientId="483606787522-3i5g6kmdjhi23aqs240k809lhd0r9tva.apps.googleusercontent.com">
+          <ScrollUp />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </GoogleOAuthProvider>
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );

@@ -4,9 +4,11 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProjectById } from "../../services/projects/ProjectDetailSlice";
 import { MdBolt, MdVerified, MdFlag, MdShare, MdStar, MdStarBorder } from "react-icons/md";
 import { FaWhatsapp, FaTwitter, FaLinkedin } from "react-icons/fa";
+import { Helmet } from 'react-helmet-async';
 import toast from "react-hot-toast";
 
 import axios from "axios";
+import { MdPlayCircle, MdCollections } from "react-icons/md";
 
 const DetailPage = () => {
   const tags = ["React", "Three.js", "3D"];
@@ -178,6 +180,21 @@ const DetailPage = () => {
     }
   };
 
+  const getYouTubeEmbedUrl = (url) => {
+    if (!url) return null;
+    let videoId = "";
+    if (url.includes("youtu.be/")) {
+      videoId = url.split("youtu.be/")[1]?.split("?")[0];
+    } else if (url.includes("watch?v=")) {
+      videoId = url.split("watch?v=")[1]?.split("&")[0];
+    } else if (url.includes("youtube.com/embed/")) {
+      videoId = url.split("youtube.com/embed/")[1]?.split("?")[0];
+    }
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  };
+
+  const embedUrl = getYouTubeEmbedUrl(projectInfo?.videoLink);
+
   const MockPaymentModal = () => (
     <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center backdrop-blur-sm">
       <div className="bg-white rounded-2xl p-8 max-w-sm w-full text-center relative animate-bounce-in">
@@ -219,6 +236,17 @@ const DetailPage = () => {
 
   return (
     <div>
+      {projectInfo && (
+        <Helmet>
+          <title>{projectInfo.title} | ProjectProof</title>
+          <meta name="description" content={projectInfo.description?.substring(0, 160)} />
+          <meta property="og:title" content={projectInfo.title} />
+          <meta property="og:description" content={projectInfo.description?.substring(0, 160)} />
+          <meta property="og:image" content={projectInfo.image} />
+          <meta property="og:url" content={shareUrl} />
+          <meta name="twitter:card" content="summary_large_image" />
+        </Helmet>
+      )}
       <h2 className="truncate text-3xl font-bold mb-8">
         {projectInfo.title}
       </h2>
@@ -261,7 +289,17 @@ const DetailPage = () => {
                 Price: <span className="font-semibold ">₹{projectInfo.price}</span>
               </p>
             </div>
-            <div>
+            <div className="flex gap-3">
+              {projectInfo.demoLink && (
+                <a
+                  href={projectInfo.demoLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="bg-green-500 text-white px-6 py-2 rounded-md font-semibold transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 shadow-md flex items-center gap-1"
+                >
+                  <MdBolt /> Live Demo
+                </a>
+              )}
               <button
                 onClick={checkoutHandler}
                 className="bg-primary text-white px-6 py-2 rounded-md font-semibold transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 shadow-md"
@@ -345,10 +383,53 @@ const DetailPage = () => {
           )}
         </div>
       </div>
-      <hr className="my-5" />
+
+      {projectInfo.videoLink && (
+        <div className="mt-12">
+          <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+            <MdPlayCircle className="text-red-500" /> Project Demo Video
+          </h3>
+          <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+            {embedUrl ? (
+              <iframe
+                src={embedUrl}
+                title="Project Demo"
+                className="absolute inset-0 w-full h-full"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <div className="absolute inset-0 bg-gray-900 flex flex-col items-center justify-center text-white p-6 text-center">
+                <MdPlayCircle size={60} className="mb-4 opacity-50" />
+                <p className="mb-4 font-medium">Video Link: <a href={projectInfo.videoLink} target="_blank" rel="noreferrer" className="underline text-blue-400">{projectInfo.videoLink}</a></p>
+                <p className="text-sm opacity-60 italic">Please click the link above if the video does not embed automatically.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {projectInfo.screenshots && projectInfo.screenshots.length > 0 && (
+        <div className="mt-12">
+          <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+            <MdCollections className="text-blue-500" /> Project Screenshots
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projectInfo.screenshots.map((s, i) => (
+              <a key={i} href={s} target="_blank" rel="noreferrer" className="group relative overflow-hidden rounded-2xl border border-gray-100 shadow-lg transition-all hover:-translate-y-2">
+                <img src={s} alt={`Screenshot ${i + 1}`} className="w-full h-48 object-cover transition-transform group-hover:scale-110" />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">View Full Image</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <hr className="my-10 border-gray-100" />
       <div>
-        <h3 className=" font-semibold mb-4">Description:</h3>
-        <p>{projectInfo.description}</p>
+        <h3 className="text-xl font-bold mb-4">Project Description:</h3>
+        <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">{projectInfo.description}</p>
       </div>
       <hr className="my-5" />
       <div>

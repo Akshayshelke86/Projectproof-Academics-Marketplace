@@ -17,24 +17,26 @@ const OrderTable = () => {
     dispatch(listMyOrders());
   }, [dispatch]);
 
-  const downloadHandler = async (projectId) => {
+  const downloadHandler = async (projectId, projectTitle) => {
     try {
-      const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-      const { data } = await axios.get(`/api/projects/${projectId}`, config);
+      const config = {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+        responseType: 'blob'
+      };
 
-      if (data.zipFilePath) {
-        // Create a temporary link to force download
-        const link = document.createElement('a');
-        link.href = data.zipFilePath;
-        link.setAttribute('download', `Project_${projectId}.zip`);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      } else {
-        alert("Download link not found for this project.");
-      }
+      const { data } = await axios.get(`/api/projects/${projectId}/download`, config);
+
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${projectTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_ProjectProof.zip`);
+      document.body.appendChild(link);
+      link.click();
+
+      link.remove();
+      window.URL.revokeObjectURL(url);
     } catch (err) {
-      alert("Failed to get download link: " + (err.response && err.response.data.message ? err.response.data.message : err.message));
+      alert("Download failed. Please ensure you are logged in and have purchased the project.");
     }
   }
 
@@ -95,7 +97,7 @@ const OrderTable = () => {
               <td className="py-4 px-4">
                 {order.isPaid ? (
                   <button
-                    onClick={() => downloadHandler(order.orderItems[0].project)}
+                    onClick={() => downloadHandler(order.orderItems[0].project, order.orderItems[0].name)}
                     className="bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 hover:bg-blue-600 transition"
                   >
                     <MdDownload size={16} /> Download

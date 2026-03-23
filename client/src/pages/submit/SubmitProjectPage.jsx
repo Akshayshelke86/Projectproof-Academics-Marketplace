@@ -12,6 +12,7 @@ const SubmitProjectPage = () => {
     const [price, setPrice] = useState('0')
     const [githubRepoLink, setGithubRepoLink] = useState('')
     const [videoLink, setVideoLink] = useState('') // New
+    const [demoLink, setDemoLink] = useState('') // New (Live Demo)
     const [zipFile, setZipFile] = useState('')
     const [image, setImage] = useState('')
     const [screenshots, setScreenshots] = useState([]) // New
@@ -44,6 +45,7 @@ const SubmitProjectPage = () => {
                     setTechStack(data.techStack)
                     setGithubRepoLink(data.githubRepoLink || '')
                     setVideoLink(data.videoLink || '')
+                    setDemoLink(data.demoLink || '')
                     setImage(data.image)
                     setZipFile(data.zipFilePath || '')
                     setScreenshots(data.screenshots || [])
@@ -177,7 +179,7 @@ const SubmitProjectPage = () => {
 
             const projectData = {
                 title, description, techStack, category, price,
-                githubRepoLink, videoLink, screenshots,
+                githubRepoLink, videoLink, demoLink, screenshots,
                 zipFilePath: zipFile, image,
             }
 
@@ -363,9 +365,15 @@ const SubmitProjectPage = () => {
                         <div className="bg-[var(--bg-deep)] p-6 rounded-2xl border border-[var(--border-color)] space-y-6">
                             <h3 className="text-lg font-bold text-[var(--text-main)] flex items-center gap-2"><MdBolt className="text-yellow-400" /> Proof of Work (Mandatory)</h3>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-[var(--text-main)] block">Demo Video Link (YouTube / Drive)</label>
-                                <input type="url" placeholder="https://youtube.com/watch?v=..." className="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)]" value={videoLink} onChange={(e) => setVideoLink(e.target.value)} required />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-[var(--text-main)] block">Demo Video Link (YouTube / Drive) *</label>
+                                    <input type="url" placeholder="https://youtube.com/watch?v=..." className="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)]" value={videoLink} onChange={(e) => setVideoLink(e.target.value)} required />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-[var(--text-main)] block">Live Demo URL (Optional)</label>
+                                    <input type="url" placeholder="https://my-app.vercel.app" className="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)]" value={demoLink} onChange={(e) => setDemoLink(e.target.value)} />
+                                </div>
                             </div>
 
                             <div className="space-y-2">

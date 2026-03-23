@@ -19,6 +19,7 @@ const sendEmail = async ({ to, subject, html }) => {
                 to: to,
                 subject: subject,
                 html: html,
+                text: html.replace(/<[^>]+>/g, ''), // Strip HTML for plain text fallback to bypass spam filters
             });
 
             console.log("Message sent: %s", info.messageId);
