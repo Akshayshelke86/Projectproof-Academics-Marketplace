@@ -1,6 +1,13 @@
 # 🚀 ProjectProof Marketplace – The Verified Academic Project Hub
 
-**ProjectProof** is a professional, high-security academic project marketplace building trust through **Plagiarism Detection**, **Secure Watermarked Downloads**, and **Verified Submission Protocols**. Designed for students, researchers, and developers to trade academic excellence with confidence.
+ProjectProof Marketplace is a professional full-stack academic project marketplace developed to ensure secure, plagiarism-free, and trustworthy academic project sharing. The platform enables students, developers, and researchers to upload, showcase, purchase, and verify academic projects through advanced plagiarism detection, secure watermarked downloads, and verified submission workflows. It provides a premium marketplace experience with secure payment integration, demo proof uploads, originality scoring, and anti-piracy protection mechanisms.
+
+The project is built using React.js, Vite, Tailwind CSS, Redux Toolkit, Node.js, Express.js, MongoDB, Python Microservices, Cloudinary, Razorpay Integration, Nodemailer, Google OAuth, and GitHub Search API for plagiarism detection. The platform also includes secure ZIP watermarking, dynamic license injection, SEO optimization, and cloud-based media management for scalability and security.
+
+**🔗 Quick Links:**
+- **Live Project:** [ProjectProof Marketplace Live Demo](https://projectproof-academics-marketplace.vercel.app/?utm_source=chatgpt.com)
+- **Demo Video:** [ProjectProof Marketplace Demo Drive Folder](https://drive.google.com/drive/folders/1YIYTOZ8KWiknwncBvzRzrYOVyCQl9p6w?usp=sharing&utm_source=chatgpt.com)
+- **GitHub Repository:** [ProjectProof Marketplace GitHub Repository](https://github.com/Akshayshelke86/Projectproof-Academics-Marketplace.git?utm_source=chatgpt.com)
 
 ---
 
