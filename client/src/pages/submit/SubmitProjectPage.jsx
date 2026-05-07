@@ -315,14 +315,14 @@ const SubmitProjectPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div className="md:col-span-2 space-y-2">
                                 <label className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider block">Project Title</label>
-                                <input type="text" placeholder="e.g. AI-Powered E-commerce Platform" className="w-full px-4 py-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-deep)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)] transition" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                                <input type="text" placeholder="e.g. AI-Powered E-commerce Platform" className="w-full px-4 py-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-main)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all shadow-sm" value={title} onChange={(e) => setTitle(e.target.value)} required />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider block">Thumbnail Image</label>
                                 <div className="relative group">
-                                    <div className={`w-full h-14 rounded-xl border-2 border-dashed flex items-center justify-center transition-all ${image ? 'border-green-500/50 bg-green-500/10' : 'border-[var(--border-color)] bg-[var(--bg-deep)] group-hover:border-[var(--primary-glow)]'}`}>
+                                    <div className={`w-full h-14 rounded-xl border-2 border-dashed flex items-center justify-center transition-all ${image ? 'border-green-500/50 bg-green-500/10' : 'border-[var(--border-color)] bg-[var(--bg-surface)] group-hover:border-[var(--primary)]'}`}>
                                         <input type="file" accept="image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={uploadImageHandler} />
-                                        {imageUploading ? <div className="animate-spin h-5 w-5 border-2 border-[var(--primary-glow)] border-t-transparent rounded-full"></div> : image ? <MdCheckCircle className="text-green-500" size={24} /> : <MdImage className="text-[var(--text-dim)]" size={24} />}
+                                        {imageUploading ? <div className="animate-spin h-5 w-5 border-2 border-[var(--primary)] border-t-transparent rounded-full"></div> : image ? <MdCheckCircle className="text-green-500" size={24} /> : <MdImage className="text-[var(--text-dim)]" size={24} />}
                                     </div>
                                 </div>
                             </div>
@@ -332,7 +332,7 @@ const SubmitProjectPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="space-y-2">
                                 <label className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider block">Category</label>
-                                <select className="w-full px-4 py-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-deep)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)]" value={category} onChange={(e) => setCategory(e.target.value)} required>
+                                <select className="w-full px-4 py-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-main)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 shadow-sm" value={category} onChange={(e) => setCategory(e.target.value)} required>
                                     <option value="">Select Category</option>
                                     <option value="Web Development">Web Development</option>
                                     <option value="Mobile App">Mobile App</option>
@@ -343,8 +343,8 @@ const SubmitProjectPage = () => {
                             <div className="space-y-2">
                                 <label className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider block">Price (₹)</label>
                                 <div className="flex gap-2">
-                                    <input type="number" className="w-full px-4 py-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-deep)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)]" value={price} onChange={(e) => setPrice(e.target.value)} required min="0" />
-                                    <button type="button" onClick={estimatePrice} className="bg-purple-600 text-white px-4 rounded-xl font-bold hover:bg-purple-700 transition flex items-center gap-2 whitespace-nowrap shadow-lg shadow-purple-500/30">
+                                    <input type="number" className="w-full px-4 py-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-main)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 shadow-sm" value={price} onChange={(e) => setPrice(e.target.value)} required min="0" />
+                                    <button type="button" onClick={estimatePrice} className="bg-gradient-1 text-white px-4 rounded-xl font-bold transition flex items-center gap-2 whitespace-nowrap shadow-lg hover:shadow-indigo-500/30">
                                         ✨ Ask AI
                                     </button>
                                 </div>
@@ -354,11 +354,11 @@ const SubmitProjectPage = () => {
                         {/* Description & Tech Stack */}
                         <div className="space-y-2">
                             <label className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider block">Project Description</label>
-                            <textarea rows="4" className="w-full px-4 py-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-deep)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)]" value={description} onChange={(e) => setDescription(e.target.value)} required></textarea>
+                            <textarea rows="4" className="w-full px-4 py-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-main)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 shadow-sm" value={description} onChange={(e) => setDescription(e.target.value)} required></textarea>
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider block">Tech Stack</label>
-                            <input type="text" className="w-full px-4 py-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-deep)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)]" value={techStack} onChange={(e) => setTechStack(e.target.value)} required />
+                            <input type="text" className="w-full px-4 py-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-main)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 shadow-sm" value={techStack} onChange={(e) => setTechStack(e.target.value)} required />
                         </div>
 
                         {/* NEW: Video & Screenshots Section */}
@@ -368,11 +368,11 @@ const SubmitProjectPage = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold text-[var(--text-main)] block">Demo Video Link (YouTube / Drive) *</label>
-                                    <input type="url" placeholder="https://youtube.com/watch?v=..." className="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)]" value={videoLink} onChange={(e) => setVideoLink(e.target.value)} required />
+                                    <input type="url" placeholder="https://youtube.com/watch?v=..." className="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-main)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 shadow-sm" value={videoLink} onChange={(e) => setVideoLink(e.target.value)} required />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold text-[var(--text-main)] block">Live Demo URL (Optional)</label>
-                                    <input type="url" placeholder="https://my-app.vercel.app" className="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)]" value={demoLink} onChange={(e) => setDemoLink(e.target.value)} />
+                                    <input type="url" placeholder="https://my-app.vercel.app" className="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-main)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 shadow-sm" value={demoLink} onChange={(e) => setDemoLink(e.target.value)} />
                                 </div>
                             </div>
 
@@ -382,8 +382,8 @@ const SubmitProjectPage = () => {
                                     {screenshots.map((s, i) => (
                                         <img key={i} src={s} alt="screenshot" className="w-20 h-20 object-cover rounded-lg border border-[var(--border-color)]" />
                                     ))}
-                                    <div className="w-20 h-20 rounded-lg border-2 border-dashed border-[var(--border-color)] flex items-center justify-center cursor-pointer hover:border-[var(--primary-glow)] relative">
-                                        {screenshotUploading ? <div className="animate-spin h-5 w-5 border-2 border-[var(--primary-glow)] border-t-transparent rounded-full"></div> : <span className="text-3xl text-[var(--text-dim)]">+</span>}
+                                    <div className="w-20 h-20 rounded-lg border-2 border-dashed border-[var(--border-color)] flex items-center justify-center cursor-pointer hover:border-[var(--primary)] relative bg-[var(--bg-surface)]">
+                                        {screenshotUploading ? <div className="animate-spin h-5 w-5 border-2 border-[var(--primary)] border-t-transparent rounded-full"></div> : <span className="text-3xl text-[var(--text-dim)]">+</span>}
                                         <input type="file" accept="image/*" className="absolute inset-0 opacity-0 cursor-pointer" onChange={uploadScreenshotHandler} />
                                     </div>
                                 </div>
@@ -427,20 +427,20 @@ const SubmitProjectPage = () => {
                             <div className="space-y-2">
                                 <label className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider block">GitHub Repo</label>
                                 <div className="flex gap-2">
-                                    <input type="url" placeholder="https://github.com/..." className="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-deep)] text-[var(--text-main)] outline-none focus:border-[var(--primary-glow)]" value={githubRepoLink} onChange={(e) => setGithubRepoLink(e.target.value)} required />
-                                    <button type="button" onClick={analyzeGithub} className="bg-gray-800 text-white px-4 rounded-lg hover:bg-black transition text-xs whitespace-nowrap">
+                                    <input type="url" placeholder="https://github.com/..." className="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-main)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 shadow-sm" value={githubRepoLink} onChange={(e) => setGithubRepoLink(e.target.value)} required />
+                                    <button type="button" onClick={analyzeGithub} className="bg-gray-800 dark:bg-white text-white dark:text-black px-4 rounded-lg hover:opacity-80 transition text-xs font-bold whitespace-nowrap">
                                         Analyze
                                     </button>
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <label className="text-sm font-bold text-[var(--text-main)] uppercase tracking-wider block">Project ZIP</label>
-                                <input type="file" className="w-full text-xs text-[var(--text-dim)] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-[var(--primary-glow)] file:text-white hover:file:bg-blue-600" onChange={uploadFileHandler} />
+                                <input type="file" className="w-full text-xs text-[var(--text-dim)] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-[var(--primary)] file:text-white hover:file:bg-[var(--primary-hover)] file:cursor-pointer" onChange={uploadFileHandler} />
                                 {zipFile && <p className="text-xs text-green-500 font-bold mt-1">✓ ZIP Attached</p>}
                             </div>
                         </div>
 
-                        <button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-5 rounded-2xl shadow-lg hover:shadow-cyan-500/20 transform active:scale-95 transition-all text-lg">
+                        <button type="submit" disabled={loading} className="w-full btn-colorful text-white font-bold py-5 rounded-2xl transition-all text-lg border-0 cursor-pointer">
                             {loading ? 'Submitting...' : 'Submit Project for Review'}
                         </button>
                     </form>
